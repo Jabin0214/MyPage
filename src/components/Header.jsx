@@ -1,17 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, Container, Button } from '@mui/material';
-import { Home as HomeIcon, Person as PersonIcon, Code as CodeIcon, Description as CVIcon } from '@mui/icons-material';
+import { AppBar, Toolbar, Container, Button, IconButton, Drawer, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
+import { Home as HomeIcon, Person as PersonIcon, Code as CodeIcon, Description as CVIcon, Menu as MenuIcon } from '@mui/icons-material';
 
 const Header = () => {
   const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
     { name: 'Home', path: '/', icon: <HomeIcon /> },
-    { name: 'About', path: '/about', icon: <PersonIcon /> },
     { name: 'Projects', path: '/projects', icon: <CodeIcon /> },
     { name: 'CV', path: '/cv', icon: <CVIcon /> },
   ];
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <div>
+      <List>
+        {navItems.map((item) => (
+          <ListItem
+            button
+            key={item.name}
+            component={Link}
+            to={item.path}
+            selected={location.pathname === item.path}
+            onClick={handleDrawerToggle}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.name} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 
   return (
     <AppBar position="static" color="default" elevation={0} className="bg-white border-b">
@@ -20,7 +44,7 @@ const Header = () => {
           <Link to="/" className="text-xl font-bold text-gray-800 no-underline">
             Jabin Chen
           </Link>
-          <nav>
+          <nav className="hidden md:block">
             <ul className="flex space-x-2">
               {navItems.map((item) => (
                 <li key={item.name}>
@@ -40,8 +64,28 @@ const Header = () => {
               ))}
             </ul>
           </nav>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className="md:hidden"
+          >
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </Container>
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        className="block md:hidden"
+      >
+        {drawer}
+      </Drawer>
     </AppBar>
   );
 };

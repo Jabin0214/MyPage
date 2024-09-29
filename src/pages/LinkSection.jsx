@@ -5,10 +5,10 @@ import { Typography } from '@mui/material';
 
 const LinkItem = ({ icon, text, link }) => (
   <div className="flex items-center space-x-3 group">
-    {React.cloneElement(icon, { className: "text-gray-600 group-hover:text-blue-600 transition-colors duration-200" })}
+    {React.cloneElement(icon, { className: "text-gray-600 group-hover:text-blue-600  duration-200" })}
     {link ? (
-      <Link to={link} className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
-        <Typography variant="body2">{text}</Typography>
+      <Link to={link} className="text-gray-700 hover:text-blue-600 duration-200 ">
+        <Typography variant="body2" >{text}</Typography>
       </Link>
     ) : (
       <Typography variant="body2" className="text-gray-700">{text}</Typography>
@@ -16,10 +16,15 @@ const LinkItem = ({ icon, text, link }) => (
   </div>
 );
 
+// items-center: aligns the items to the center
+// space-x-3: adds space between the icon and text
+// group: adds a group hover effect to the icon
+// group-hover:text-blue-600: changes the color of the icon on hover
+
 const LinkSection = () => (
   <div className="bg-white shadow-md rounded-lg p-6 mt-10">
-    <Typography variant="h6" className="font-semibold py-2 text-gray-800">Contact Information</Typography>
-    <div className="space-y-4">
+    <Typography variant="h6" className="font-semibold py-2 text-gray-800 ">Contact Information</Typography>
+    <div className="space-y-4 ">
       <LinkItem 
         icon={<Place />} 
         text="New Zealand" 
