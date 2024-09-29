@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, Container, Button, IconButton, Drawer, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
+import { AppBar, Toolbar, Container, Button, IconButton, Drawer, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Home as HomeIcon, Person as PersonIcon, Code as CodeIcon, Description as CVIcon, Menu as MenuIcon } from '@mui/icons-material';
 
 const Header = () => {
@@ -18,11 +18,10 @@ const Header = () => {
   };
 
   const drawer = (
-    <div>
-      <List>
+    <div className="overflow-hidden">
+      <List className="w-full max-w-full">
         {navItems.map((item) => (
-          <ListItem
-            button
+          <ListItemButton
             key={item.name}
             component={Link}
             to={item.path}
@@ -31,7 +30,7 @@ const Header = () => {
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.name} />
-          </ListItem>
+          </ListItemButton>
         ))}
       </List>
     </div>
@@ -80,9 +79,12 @@ const Header = () => {
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
+          keepMounted: true,
         }}
-        className="block md:hidden"
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+        }}
       >
         {drawer}
       </Drawer>
